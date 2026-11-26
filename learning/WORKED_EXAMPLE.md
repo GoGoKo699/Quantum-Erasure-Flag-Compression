@@ -22,8 +22,8 @@ Use the same pattern of check signs with the negative check now in pair 3, on si
 Writing unnormalized flag vectors to display their spans, the two subspaces are
 ```math
 \begin{aligned}
-L&=\operatorname{span}\{(0,1,-1,0),(0,0,0,1)\},\\
-R&=\operatorname{span}\{(0,1,1,0),(1,0,0,0)\}.
+L&=\mathrm{span}\{(0,1,-1,0),(0,0,0,1)\},\\
+R&=\mathrm{span}\{(0,1,1,0),(1,0,0,0)\}.
 \end{aligned}
 ```
 The first pair of vectors spans all left flags. Every right flag lies in the second span, and both spans are two-dimensional and orthogonal. A projective measurement with effects $`\Pi_L,\Pi_R`$ therefore selects the correct logical action. Within the right class, for example, the normalized flags for labels 4 and 8 have inner product $`1/\sqrt3`$. The decoder needs only their common correction.

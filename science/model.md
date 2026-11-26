@@ -1,18 +1,18 @@
 # Correction with an event flag
 
-Alice prepares an encoded quantum state. A channel draws an event $v$ from a finite alphabet with positive probabilities and applies a channel $\mathcal N_v$ to the encoded state. The monitor learns $v$. It sends a flag state $\sigma_v$ in one fixed-dimensional output system, with no shared entanglement, feedback, or access to the encoded input. Bob receives the corrupted data and the flag and applies one decoder. Exact recovery requires the identity channel on the whole logical input, including states entangled with a reference. The transmitted flag dimension is the cost. A $c$-symbol classical flag occupies $\lceil\log_2 c\rceil$ fixed-length bits, and a dimension-$d$ quantum flag occupies $\lceil\log_2 d\rceil$ qubits.
+Alice prepares an encoded quantum state. A channel draws an event $`v`$ from a finite alphabet with positive probabilities and applies a channel $`\mathcal N_v`$ to the encoded state. The monitor learns $`v`$. It sends a flag state $`\sigma_v`$ in one fixed-dimensional output system, with no shared entanglement, feedback, or access to the encoded input. Bob receives the corrupted data and the flag and applies one decoder. Exact recovery requires the identity channel on the whole logical input, including states entangled with a reference. The transmitted flag dimension is the cost. A $`c`$-symbol classical flag occupies $`\lceil\log_2 c\rceil`$ fixed-length bits, and a dimension-$`d`$ quantum flag occupies $`\lceil\log_2 d\rceil`$ qubits.
 
-The code is fixed unless a result explicitly concerns encoder choice. In the replacement model, event $v$ has support $S_v$. The channel traces out its carriers and inserts maximally mixed qubits in the same positions. The receiver has the original carrier labels and no separate erasure record. A replacement of $S$ can be written as a uniform mixture of the $4^{|S|}$ Pauli errors supported in $S$.
+The code is fixed unless a result explicitly concerns encoder choice. In the replacement model, event $`v`$ has support $`S_v`$. The channel traces out its carriers and inserts maximally mixed qubits in the same positions. The receiver has the original carrier labels and no separate erasure record. A replacement of $`S`$ can be written as a uniform mixture of the $`4^{|S|}`$ Pauli errors supported in $`S`$.
 
 ## Exact flag theorem
 
-Let $P$ project onto the code, and let $\mathcal E_v$ be the linear span of the Kraus operators of $\mathcal N_v$. Assume each event is exactly correctable on that code. Define a graph $G$ with vertex set given by the events. Join $v,w$ when there are $E\in\mathcal E_v$ and $F\in\mathcal E_w$ with
+Let $`P`$ project onto the code, and let $`\mathcal E_v`$ be the linear span of the Kraus operators of $`\mathcal N_v`$. Assume each event is exactly correctable on that code. Define a graph $`G`$ with vertex set given by the events. Join $`v,w`$ when there are $`E\in\mathcal E_v`$ and $`F\in\mathcal E_w`$ with
 ```math
 PE^\dagger FP\notin\mathbb C P.
 ```
-Bilinearity makes this equivalent to checking operators in any pair of spanning sets. The condition is invariant under the Kraus representation. The minimum exact classical alphabet is the chromatic number $\chi(G)$. The minimum exact quantum dimension is the complex orthogonal rank $\xi_{\mathbb C}(G)$, the least dimension in which one can assign unit rays that are orthogonal on every edge.
+Bilinearity makes this equivalent to checking operators in any pair of spanning sets. The condition is invariant under the Kraus representation. The minimum exact classical alphabet is the chromatic number $`\chi(G)`$. The minimum exact quantum dimension is the complex orthogonal rank $`\xi_{\mathbb C}(G)`$, the least dimension in which one can assign unit rays that are orthogonal on every edge.
 
-To prove the claim, spectral-decompose a flag as $\sigma_v=\sum_j\lambda_{vj}|f_{vj}\rangle\langle f_{vj}|$, retaining its positive eigenvalues. The Kraus operators of the flagged mixture are $\sqrt{p_v\lambda_{vj}}(E_{v,a}\otimes|f_{vj}\rangle)$. Taking a product between the adjoint of one operator and another gives, up to a positive factor,
+To prove the claim, spectral-decompose a flag as $`\sigma_v=\sum_j\lambda_{vj}|f_{vj}\rangle\langle f_{vj}|`$, retaining its positive eigenvalues. The Kraus operators of the flagged mixture are $`\sqrt{p_v\lambda_{vj}}(E_{v,a}\otimes|f_{vj}\rangle)`$. Taking a product between the adjoint of one operator and another gives, up to a positive factor,
 ```math
 \langle f_{vj}|f_{wk}\rangle P E_{v,a}^\dagger E_{w,b}P.
 ```
@@ -22,4 +22,4 @@ If an event is itself uncorrectable, an independent flag carrying the event labe
 
 ## Union rule for replacement errors
 
-For replacement events on supports $S$ and $T$ the span of all cross products equals the space of operators supported on $S\cup T$. The two Pauli factors can allocate any desired product Pauli to one of the input supports at each site. Hence two individually correctable replacement labels conflict exactly when the code cannot correct a replacement of their union. For a stabilizer code a support is correctable exactly when every Pauli on that support that commutes with all the checks acts as a scalar on the code. The remaining supported Paulis have zero projection within the code.
+For replacement events on supports $`S`$ and $`T`$ the span of all cross products equals the space of operators supported on $`S\cup T`$. The two Pauli factors can allocate any desired product Pauli to one of the input supports at each site. Hence two individually correctable replacement labels conflict exactly when the code cannot correct a replacement of their union. For a stabilizer code a support is correctable exactly when every Pauli on that support that commutes with all the checks acts as a scalar on the code. The remaining supported Paulis have zero projection within the code.
