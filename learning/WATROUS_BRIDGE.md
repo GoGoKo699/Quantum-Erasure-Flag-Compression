@@ -22,7 +22,7 @@ The educational anchor is **John Watrous, *The Theory of Quantum Information***,
 | $`u`$, $`u^*`$, $`uu^*`$ | $`\lvert\psi\rangle`$, $`\langle\psi\rvert`$, $`\lvert\psi\rangle\langle\psi\rvert`$ | A vector, its adjoint, and its pure-state projector. |
 | $`A_a`$ in a Kraus sum | $`E_{v,a}`$ | An operator for a channel branch conditional on event $`v`$. |
 | $`\mu(a)`$ | A syndrome projector or a flag effect | The positive operator whose expectation gives the corresponding outcome probability. |
-| $`\operatorname{Tr}_{\mathcal Z}`$ | $`\operatorname{Tr}_{S_v}`$ when modeling a replacement | Discard the systems at the specified positions before inserting fresh maximally mixed carriers. |
+| $`\mathrm{Tr}_{\mathcal Z}`$ | $`\mathrm{Tr}_{S_v}`$ when modeling a replacement | Discard the systems at the specified positions before inserting fresh maximally mixed carriers. |
 | $`F(\Phi,\rho)`$ in Definition 3.30 | $`F_e(\Phi)`$ at $`\rho=I/2`$ | Here $`F_e`$ is the **square** of Watrous's mapping fidelity. |
 | Completely bounded trace norm | $`\lVert\cdot\rVert_\diamond`$ | Distance convention used to compare channels while retaining a reference. |
 
@@ -31,7 +31,7 @@ The educational anchor is **John Watrous, *The Theory of Quantum Information***,
 Let $`V`$ encode a logical qubit and put $`P=VV^\dagger`$. If one physical qubit is replaced by $`I/2`$, averaging equally over its four Pauli operations realizes the same channel. Inside the larger encoded block this acts as
 ```math
 \mathcal D_q(A)=\frac14\sum_{Q\in\{I,X,Y,Z\}}Q_q A Q_q^\dagger
-=\frac{I_q}{2}\otimes\operatorname{Tr}_q A,
+=\frac{I_q}{2}\otimes\mathrm{Tr}_q A,
 ```
 with the tensor factors in their original order. A particular Kraus term is a representation of the data noise. The monitor directly observes the set of replaced positions, so its report can depend on the event label alone. [Project model](../science/model.md)
 
@@ -46,7 +46,7 @@ Orthogonal flags therefore remove the cross term exactly where it prevents recov
 For a qubit, prepare a maximally entangled state $`\lvert\Phi^+\rangle`$ of the logical input and an untouched reference. For the net logical channel $`\Lambda`$ the project uses
 ```math
 F_e(\Lambda)=\langle\Phi^+\rvert
-(\Lambda\otimes\operatorname{id})(\lvert\Phi^+\rangle\langle\Phi^+\rvert)
+(\Lambda\otimes\mathrm{id})(\lvert\Phi^+\rangle\langle\Phi^+\rvert)
 \lvert\Phi^+\rangle.
 ```
 
