@@ -1,0 +1,18 @@
+# Quantum Erasure Flag Compression
+
+> Exact recovery with compressed flags for correlated unmarked qubit replacements. One-way unassisted monitor communication and explicit stabilizer-code benchmarks.
+
+## Science
+
+- [Overview](README.md)
+- [Model and Knill–Laflamme criterion](science/model.md)
+- [Code, syndrome decoder and re-encoding](science/construction.md)
+- [Independent repetitions and flag rates](science/rates.md)
+- [Classical fidelity and flag noise](science/robustness.md)
+- [Attribution and related work](science/related-work.md)
+
+## Learning and reproduction
+
+- [Learning route and anchor](learning/README.md)
+- [Common milestones](learning/MILESTONES.md)
+- [Finite verification](verification/README.md)
