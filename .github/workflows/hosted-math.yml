@@ -20,8 +20,8 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     env:
-      CAPTURE_REVISION: '5aa1a61687d29628b8f64d6db2fd16769d74f89d'
-      CAPTURE_TREE: '72afdd5d2408c8be2787ed3bda4528939ee96a37'
+      CAPTURE_REVISION: 'aefe151ca9d5f0e4700a6fe1830028c71cfa80ce'
+      CAPTURE_TREE: '70f7801aa1acb2e3b2c122cf52446b456de02290'
       HELPERS_REVISION: '61732505c5cd72f56fdb82a36d5c5f138b006f7d'
     steps:
       - name: Check out the exact scientific revision
