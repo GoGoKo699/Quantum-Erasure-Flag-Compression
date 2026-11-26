@@ -1,0 +1,102 @@
+name: Hosted mathematics
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+    paths:
+      - '.github/workflows/hosted-math.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hosted-math-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  capture:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      CAPTURE_REVISION: '5aa1a61687d29628b8f64d6db2fd16769d74f89d'
+      CAPTURE_TREE: '72afdd5d2408c8be2787ed3bda4528939ee96a37'
+      HELPERS_REVISION: '61732505c5cd72f56fdb82a36d5c5f138b006f7d'
+    steps:
+      - name: Check out the exact scientific revision
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ env.CAPTURE_REVISION }}
+          path: checked-source
+          persist-credentials: false
+      - name: Check out the matching public hosted helpers
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: GoGoKo699/Quantum-Field-Chirality-Sensing
+          ref: ${{ env.HELPERS_REVISION }}
+          path: public-helpers
+          persist-credentials: false
+          sparse-checkout: tools/hosted_math
+      - name: Verify the scientific and helper pins
+        run: |
+          test "$(git -C checked-source rev-parse HEAD)" = "$CAPTURE_REVISION"
+          test "$(git -C checked-source rev-parse 'HEAD^{tree}')" = "$CAPTURE_TREE"
+          test "$(git -C public-helpers rev-parse HEAD)" = "$HELPERS_REVISION"
+          cd public-helpers/tools/hosted_math
+          test "$(git hash-object capture_hosted_math.cjs)" = e8d2c87b345b1c94c11e01b8661f92e4abf8d97d
+          test "$(git hash-object check_rendered_math.py)" = 1d3bf9810d0dfadb844a48b354af80f9b66924bc
+          test "$(git hash-object probe_hosted_math.cjs)" = f83ea9da799bee0b53bd5c57315ae2b4b2d9de43
+          printf 'Scientific commit %s\nScientific tree %s\n' "$CAPTURE_REVISION" "$CAPTURE_TREE"
+      - name: Set up Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: Install the read-only capture runtime
+        run: |
+          npm install --prefix "$RUNNER_TEMP/math-runtime" playwright@1.56.1 mathjax-full@3.2.1
+          node "$RUNNER_TEMP/math-runtime/node_modules/playwright/cli.js" install chromium
+      - name: Probe the README at both widths
+        continue-on-error: true
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/math-runtime/node_modules"
+          node public-helpers/tools/hosted_math/probe_hosted_math.cjs \
+            --root "$GITHUB_WORKSPACE/checked-source" \
+            --repository "$GITHUB_REPOSITORY" \
+            --revision "$CAPTURE_REVISION" \
+            --page README.md \
+            --output "$RUNNER_TEMP/hosted-probe"
+      - name: Capture all hosted Markdown at both widths
+        shell: bash
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/math-runtime/node_modules"
+          capture=(
+            node public-helpers/tools/hosted_math/capture_hosted_math.cjs
+            --root "$GITHUB_WORKSPACE/checked-source"
+            --repository "$GITHUB_REPOSITORY"
+            --revision "$CAPTURE_REVISION"
+          )
+          if "${capture[@]}" --output "$RUNNER_TEMP/hosted-math"; then
+            exit 0
+          else
+            status=$?
+          fi
+          report="$RUNNER_TEMP/hosted-math/hosted-report.json"
+          if test -f "$report" && grep -q 'transport_failure: Error: HTTP 50[234]' "$report"; then
+            mv "$RUNNER_TEMP/hosted-math" "$RUNNER_TEMP/hosted-math-first"
+            "${capture[@]}" --resume-from "$RUNNER_TEMP/hosted-math-first" \
+              --output "$RUNNER_TEMP/hosted-math"
+          else
+            exit "$status"
+          fi
+      - name: Retain hosted reports and screenshots
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: hosted-math-${{ env.CAPTURE_REVISION }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/hosted-math
+            ${{ runner.temp }}/hosted-math-first
+            ${{ runner.temp }}/hosted-probe
+          if-no-files-found: warn
+          retention-days: 14
