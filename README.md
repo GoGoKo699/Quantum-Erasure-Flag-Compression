@@ -16,7 +16,7 @@ For independent repetitions with the original encoder on each block, the minimum
 R_{\mathrm q}=2\ \text{qubits},\qquad R_{\mathrm c}=\log_2(46/11)\ \text{bits}.
 ```
 
-The model gives the monitor the event label alone. The decoder receives the replacement qubits without location markers. Communication is one-way, without preshared entanglement. Exact recovery uses perfect syndrome operations and a noiseless flag link. The robustness analysis treats imperfect flags under specified noise models.
+The model gives the monitor the event label alone. The decoder receives the replacement qubits without location markers. Communication is one-way, without preshared entanglement. Exact recovery uses perfect syndrome operations and a noiseless flag link. With the supplied code and ray flags, the quantum protocol beats two perfect classical bits for heralded whole-flag erasure probability below $`2/1643`$, or unheralded flag depolarization probability below $`1/1516`$ with an optimized decoder.
 
 ## Read the science
 
